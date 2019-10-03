@@ -83,15 +83,22 @@ plt.ylabel('VCB Stock Price')
 plt.legend()
 plt.show()
 
-''' Dang bi sai, minh se update sau
 # Du doan tiep gia cac ngay tiep theo den 30/10
-dataset_test = dataset_test[len(dataset_test)-60:len(dataset_test)]['CLOSE'].to_numpy()
+
+
+dataset_test = dataset_test['CLOSE'][len(dataset_test)-60:len(dataset_test)].to_numpy()
 dataset_test = np.array(dataset_test)
+
+inputs = dataset_test
+inputs = inputs.reshape(-1,1)
+inputs = sc.transform(inputs)
+
 
 i = 0
 while i<28:
     X_test = []
     no_of_sample = len(dataset_test)
+
     # Lay du lieu cuoi cung
     X_test.append(inputs[no_of_sample - 60:no_of_sample, 0])
     X_test = np.array(X_test)
@@ -99,13 +106,16 @@ while i<28:
 
     # Du doan gia
     predicted_stock_price = regressor.predict(X_test)
-    dataset_test =  np.append(dataset_test,predicted_stock_price[0],axis=0)
 
     # chuyen gia tu khoang (0,1) thanh gia that
     predicted_stock_price = sc.inverse_transform(predicted_stock_price)
 
-    print('Stock price ' + str(i+3) + '/10/2019 of VCB : ',predicted_stock_price[0][0])
-    i = i +1
-'''
+    # Them ngay hien tai vao
+    dataset_test = np.append(dataset_test, predicted_stock_price[0], axis=0)
+    inputs = dataset_test
+    inputs = inputs.reshape(-1, 1)
+    inputs = sc.transform(inputs)
 
+    print('Stock price ' + str(i+3) + '/10/2019 of VCB : ', predicted_stock_price[0][0])
+    i = i +1
 
