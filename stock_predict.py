@@ -83,6 +83,7 @@ plt.ylabel('VCB Stock Price')
 plt.legend()
 plt.show()
 
+''' Dang bi sai, minh se update sau
 # Du doan tiep gia cac ngay tiep theo den 30/10
 dataset_test = dataset_test[len(dataset_test)-60:len(dataset_test)]['CLOSE'].to_numpy()
 dataset_test = np.array(dataset_test)
@@ -105,6 +106,6 @@ while i<28:
 
     print('Stock price ' + str(i+3) + '/10/2019 of VCB : ',predicted_stock_price[0][0])
     i = i +1
-
+'''
 
 
